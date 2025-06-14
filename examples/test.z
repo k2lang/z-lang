@@ -1,0 +1,4 @@
+// Simple test program for Z language
+fn main() {
+    print("Hello from Z language!");
+}

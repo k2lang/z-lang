@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+
+# Clean up any temporary files
+rm -f /tmp/z_temp_program.c /tmp/z_temp_executable
+
+exit 0

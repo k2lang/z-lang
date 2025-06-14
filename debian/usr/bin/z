@@ -1,0 +1,4 @@
+#!/bin/bash
+# Z language wrapper script
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+$SCRIPT_DIR/zc "$@"

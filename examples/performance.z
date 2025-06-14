@@ -1,0 +1,138 @@
+// Performance showcase for Z language
+
+// Import standard libraries
+import std.math;
+import std.parallel;
+import std.time;
+
+fn main() {
+    // Measure execution time
+    let start = time.now();
+    
+    // Create a large array
+    let size = 10_000_000;
+    let numbers = array.filled(size, |i| i as float);
+    
+    print("Array created with {size} elements");
+    
+    // Sequential sum
+    let seq_start = time.now();
+    let seq_sum = sequential_sum(numbers);
+    let seq_duration = time.now() - seq_start;
+    
+    print("Sequential sum: {seq_sum}");
+    print("Sequential time: {seq_duration} ms");
+    
+    // Parallel sum
+    let par_start = time.now();
+    let par_sum = parallel_sum(numbers);
+    let par_duration = time.now() - par_start;
+    
+    print("Parallel sum: {par_sum}");
+    print("Parallel time: {par_duration} ms");
+    print("Speedup: {seq_duration / par_duration}x");
+    
+    // SIMD operations
+    let simd_start = time.now();
+    let simd_sum = simd_sum(numbers);
+    let simd_duration = time.now() - simd_start;
+    
+    print("SIMD sum: {simd_sum}");
+    print("SIMD time: {simd_duration} ms");
+    print("Speedup vs sequential: {seq_duration / simd_duration}x");
+    
+    // Matrix multiplication
+    let matrix_size = 1000;
+    let matrix_a = create_random_matrix(matrix_size, matrix_size);
+    let matrix_b = create_random_matrix(matrix_size, matrix_size);
+    
+    let matrix_start = time.now();
+    let result = matrix_multiply(matrix_a, matrix_b);
+    let matrix_duration = time.now() - matrix_start;
+    
+    print("Matrix multiplication ({matrix_size}x{matrix_size}) time: {matrix_duration} ms");
+    
+    let total_duration = time.now() - start;
+    print("Total execution time: {total_duration} ms");
+}
+
+// Sequential sum
+fn sequential_sum(numbers: [float]) -> float {
+    let sum = 0.0;
+    for i in 0..numbers.length {
+        sum += numbers[i];
+    }
+    return sum;
+}
+
+// Parallel sum using work stealing
+fn parallel_sum(numbers: [float]) -> float {
+    return parallel.reduce(numbers, 0.0, |a, b| a + b);
+}
+
+// SIMD-optimized sum
+@simd
+fn simd_sum(numbers: [float]) -> float {
+    let sum = 0.0;
+    for i in 0..numbers.length {
+        sum += numbers[i];
+    }
+    return sum;
+}
+
+// Create a random matrix
+fn create_random_matrix(rows: int, cols: int) -> [[float]] {
+    return array.filled(rows, |_| 
+        array.filled(cols, |_| math.random())
+    );
+}
+
+// Optimized matrix multiplication
+@parallel
+fn matrix_multiply(a: [[float]], b: [[float]]) -> [[float]] {
+    let rows_a = a.length;
+    let cols_a = a[0].length;
+    let cols_b = b[0].length;
+    
+    // Transpose b for better cache locality
+    let b_t = transpose(b);
+    
+    // Create result matrix
+    let result = array.filled(rows_a, |_| array.filled(cols_b, |_| 0.0));
+    
+    // Parallel execution of matrix multiplication
+    parallel.for(0, rows_a, |i| {
+        for j in 0..cols_b {
+            let row_a = a[i];
+            let col_b = b_t[j];
+            
+            let mut sum = 0.0;
+            
+            // Use SIMD for dot product
+            @simd
+            for k in 0..cols_a {
+                sum += row_a[k] * col_b[k];
+            }
+            
+            result[i][j] = sum;
+        }
+    });
+    
+    return result;
+}
+
+// Matrix transpose
+fn transpose(matrix: [[float]]) -> [[float]] {
+    let rows = matrix.length;
+    let cols = matrix[0].length;
+    
+    let result = array.filled(cols, |_| array.filled(rows, |_| 0.0));
+    
+    for i in 0..rows {
+        for j in 0..cols {
+            result[j][i] = matrix[i][j];
+        }
+    }
+    
+    return result;
+}

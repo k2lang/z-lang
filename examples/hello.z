@@ -1,0 +1,74 @@
+// Hello World in Z language
+fn main() {
+    print("Hello, World!");
+    
+    // Variables with type inference
+    let x = 42;
+    let y: float = 3.14;
+    
+    // Fast array operations
+    let numbers = [1, 2, 3, 4, 5];
+    let sum = numbers.fold(0, |acc, n| acc + n);
+    
+    print("Sum: {sum}");
+    
+    // Parallel processing made easy
+    let results = parallel_map(numbers, |n| n * n);
+    print("Squares: {results}");
+    
+    // Automatic memory management
+    let s = "This string will be automatically freed";
+    
+    // Conditional expressions
+    let max = if x > 10 { x } else { 10 };
+    print("Max: {max}");
+    
+    // Pattern matching
+    let option = Some(42);
+    let value = match option {
+        Some(v) => v,
+        None => 0,
+    };
+    print("Value: {value}");
+}
+
+// Function with explicit types
+fn fibonacci(n: int) -> int {
+    if n <= 1 {
+        return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// Struct definition
+struct Point {
+    x: float,
+    y: float,
+}
+
+// Method implementation
+impl Point {
+    // Constructor
+    fn new(x: float, y: float) -> Point {
+        return Point { x, y };
+    }
+    
+    // Method
+    fn distance(&self, other: Point) -> float {
+        let dx = self.x - other.x;
+        let dy = self.y - other.y;
+        return (dx * dx + dy * dy).sqrt();
+    }
+}
+
+// Generic function
+fn identity<T>(x: T) -> T {
+    return x;
+}
+
+// Async function
+async fn fetch_data(url: string) -> string {
+    // Simulated network request
+    await sleep(100);
+    return "Data from {url}";
+}

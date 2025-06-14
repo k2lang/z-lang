@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+# Update man database
+if [ -x "$(command -v mandb)" ]; then
+    mandb -q
+fi
+
+# Display installation message
+echo "Z Programming Language has been installed successfully!"
+echo "Run 'z --help' to get started."
+echo "Visit https://k2lang.org for documentation and examples."
+
+exit 0

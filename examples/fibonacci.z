@@ -1,0 +1,19 @@
+// Fibonacci sequence calculator in Z language
+fn main() {
+    print("Fibonacci Sequence Calculator");
+    
+    // Calculate and print the first 10 Fibonacci numbers
+    print("First 10 Fibonacci numbers:");
+    for i in 0..10 {
+        let fib = fibonacci(i);
+        print("fibonacci(" + i + ") = " + fib);
+    }
+}
+
+// Recursive function to calculate Fibonacci numbers
+fn fibonacci(n: int) -> int {
+    if n <= 1 {
+        return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}

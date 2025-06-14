@@ -1,0 +1,29 @@
+// Simple example in Z language
+fn main() {
+    print("Hello, World! This is Z - the fastest programming language ever!");
+    
+    // Variables with type inference
+    let x = 42;
+    let y = 3.14;
+    
+    // Simple arithmetic
+    let sum = x + 10;
+    let product = x * 2;
+    
+    print("Sum: " + sum);
+    print("Product: " + product);
+    
+    // Simple conditional
+    if x > 40 {
+        print("x is greater than 40");
+    } else {
+        print("x is not greater than 40");
+    }
+    
+    // Simple loop
+    let i = 0;
+    while i < 5 {
+        print("Loop iteration: " + i);
+        i = i + 1;
+    }
+}

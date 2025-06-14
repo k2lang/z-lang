@@ -1,0 +1,18 @@
+Package: z-lang
+Version: 0.1.0
+Section: devel
+Priority: optional
+Architecture: amd64
+Depends: gcc (>= 10.0.0), libc6 (>= 2.31)
+Maintainer: Z Language Team <info@k2lang.org>
+Description: Z Programming Language Compiler
+ Z is a modern, statically-typed programming language designed for 
+ maximum performance and developer productivity. It compiles directly 
+ to optimized native code, resulting in performance that rivals C and C++.
+ .
+ Features:
+  * Blazing fast performance
+  * Type safety
+  * Modern syntax
+  * Zero cost abstractions
+Homepage: https://k2lang.org

@@ -1,0 +1,15 @@
+// Simple example in Z language
+fn main() {
+    print("Hello, World! This is Z - the fastest programming language ever!");
+    
+    // Variables with type inference
+    let x = 42;
+    let y = 3.14;
+    
+    // Simple arithmetic
+    let sum = x + 10;
+    let product = x * 2;
+    
+    print("Sum: " + sum);
+    print("Product: " + product);
+}
